@@ -23,4 +23,23 @@ public class TransactionsRepository {
     public List<Object> listBankTransactions() {
         return database.listData();
     }
+
+    public void putBankTransaction(BankTransaction transaction, int index){
+        int sizeList = listBankTransactions().size();
+
+        if (index <= sizeList ){
+            listBankTransactions().set(index, transaction);
+            System.out.println("OK: 200");
+        }
+    }
+
+    public void  deleteBankTransaction(int index){
+        int sizeList = listBankTransactions().size();
+
+        if (index <= sizeList ){
+            listBankTransactions().remove(index);
+            System.out.println("Delete ok");
+        }
+    }
+
 }
