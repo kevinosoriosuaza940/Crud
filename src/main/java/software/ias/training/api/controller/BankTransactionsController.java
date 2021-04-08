@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.*;
 import software.ias.training.api.domain.BankTransaction;
 import software.ias.training.api.repository.TransactionsRepository;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @RestController
@@ -41,4 +43,14 @@ public class BankTransactionsController {
         repository.deleteBankTransaction(index);
     }
 
+    @RequestMapping(value="/filter", method = RequestMethod.GET)
+    public List<Object>  filterTransaction(
+            @RequestBody
+            @RequestParam String fechaInicial, @RequestParam String fechaFinal
+            ){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-d");
+        LocalDate fechaIni = LocalDate.parse(fechaInicial, formatter);
+        LocalDate fechaFin = LocalDate.parse(fechaFinal, formatter);
+        return repository.filterByDate(fechaIni, fechaFin);
+    }
 }
